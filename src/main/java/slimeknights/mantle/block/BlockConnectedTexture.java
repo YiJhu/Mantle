@@ -5,9 +5,10 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -21,24 +22,24 @@ public class BlockConnectedTexture extends Block {
     
     // These are the properties used for determining whether or not a side is connected. They
     // do NOT take up block IDs, they are unlisted properties
-    public static final PropertyBool CONNECTED_DOWN = PropertyBool.create("connected_down");
-    public static final PropertyBool CONNECTED_UP = PropertyBool.create("connected_up");
-    public static final PropertyBool CONNECTED_NORTH = PropertyBool.create("connected_north");
-    public static final PropertyBool CONNECTED_SOUTH = PropertyBool.create("connected_south");
-    public static final PropertyBool CONNECTED_WEST = PropertyBool.create("connected_west");
-    public static final PropertyBool CONNECTED_EAST = PropertyBool.create("connected_east");
+    public static final BooleanProperty CONNECTED_DOWN = BooleanProperty.create(("connected_down");
+    public static final BooleanProperty CONNECTED_UP = BooleanProperty.create(("connected_up");
+    public static final BooleanProperty CONNECTED_NORTH = BooleanProperty.create(("connected_north");
+    public static final BooleanProperty CONNECTED_SOUTH = BooleanProperty.create(("connected_south");
+    public static final BooleanProperty CONNECTED_WEST = BooleanProperty.create(("connected_west");
+    public static final BooleanProperty CONNECTED_EAST = BooleanProperty.create(("connected_east");
     
     public BlockConnectedTexture(Material material) {
         
       super(material);
       // By default none of the sides are connected
-      this.setDefaultState(this.blockState.getBaseState()
-                                          .withProperty(CONNECTED_DOWN, Boolean.FALSE)
-                                          .withProperty(CONNECTED_EAST, Boolean.FALSE)
-                                          .withProperty(CONNECTED_NORTH, Boolean.FALSE)
-                                          .withProperty(CONNECTED_SOUTH, Boolean.FALSE)
-                                          .withProperty(CONNECTED_UP, Boolean.FALSE)
-                                          .withProperty(CONNECTED_WEST, Boolean.FALSE));
+      this.setDefaultState(this.stateContainer.getBaseState()
+                                          .with(CONNECTED_DOWN, Boolean.FALSE)
+                                          .with(CONNECTED_EAST, Boolean.FALSE)
+                                          .with(CONNECTED_NORTH, Boolean.FALSE)
+                                          .with(CONNECTED_SOUTH, Boolean.FALSE)
+                                          .with(CONNECTED_UP, Boolean.FALSE)
+                                          .with(CONNECTED_WEST, Boolean.FALSE));
     }
     
     @Override
@@ -54,11 +55,10 @@ public class BlockConnectedTexture extends Block {
                   .withProperty(CONNECTED_WEST,  this.isSideConnectable(state, world, position, EnumFacing.WEST));
     }
 
-    @Nonnull
-    @Override
-    protected BlockStateContainer createBlockState() {
-      return new BlockStateContainer(this, new IProperty[] { CONNECTED_DOWN, CONNECTED_UP, CONNECTED_NORTH, CONNECTED_SOUTH, CONNECTED_WEST, CONNECTED_EAST });
-    }
+     @Override
+     protected void fillStateContainer(StateContainer.Builder<Block, IBlockState> builder) {
+         builder.add(CONNECTED_DOWN, CONNECTED_UP, CONNECTED_NORTH, CONNECTED_SOUTH, CONNECTED_WEST, CONNECTED_EAST);
+     }
     
     // Since the block has state information but we are not switching the meta value, we have
     // to override this method to return 0

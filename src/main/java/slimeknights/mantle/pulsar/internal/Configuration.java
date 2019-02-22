@@ -6,8 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import net.minecraftforge.fml.common.Loader;
-
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -50,7 +49,7 @@ public class Configuration implements IConfiguration {
      * @param logger The logger to send debug info to.
      */
     public Configuration(String confName, Logger logger) {
-        this.confPath = Loader.instance().getConfigDir().toString() + File.separator + confName + ".json";
+        this.confPath = FMLPaths.CONFIGDIR.toString() + File.separator + confName + ".json";
         this.logger = logger;
     }
 

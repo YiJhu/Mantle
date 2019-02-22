@@ -4,6 +4,8 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.CrashReportExtender;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.Loader;
@@ -92,7 +94,7 @@ public class PulseManager {
         this.id = modId;
         log = LogManager.getLogger("Pulsar-" + modId);
         flightpath.setExceptionHandler(new BusExceptionHandler(modId));
-        FMLCommonHandler.instance().registerCrashCallable(new CrashHandler(modId, this));
+        CrashReportExtender.registerCrashCallable(new CrashHandler(modId, this));
         // Attach us to the mods FML bus
         attachToContainerEventBus(this);
     }
@@ -143,7 +145,7 @@ public class PulseManager {
         if (!deps.equals("")) {
             String[] parsedDeps = deps.split(";");
             for (String s : parsedDeps) {
-                if (!Loader.isModLoaded(s)) {
+                if (!ModList.get().isLoaded(s)) {
                     log.info("Skipping Pulse " + id + "; missing dependency: " + s);
                     missingDeps = true;
                     enabled = false;

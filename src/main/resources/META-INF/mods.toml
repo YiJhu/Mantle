@@ -1,0 +1,19 @@
+modLoader="javafml"
+loaderVersion="[24,)"
+issueTrackerURL="https://github.com/progwml6/ironchest/issues"
+
+[[mods]]
+    modId="mantle"
+    version="${version}"
+    displayName="Mantle"
+    authors="boni, alexbegt, progwml6"
+    description='''
+Shared code for Slime Knights mods and others.
+    '''
+    displayURL="https://minecraft.curseforge.com/projects/iron-chests"
+    [[dependencies.mantle]]
+        modId="forge"
+        mandatory=true
+        versionRange="[24,)"
+        ordering="NONE"
+        side="BOTH"

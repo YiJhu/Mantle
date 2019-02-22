@@ -28,11 +28,11 @@ public class ModelHelper {
 
   public static TextureAtlasSprite getTextureFromBlock(Block block, int meta) {
     IBlockState state = block.getStateFromMeta(meta);
-    return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
+    return Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
   }
 
   public static TextureAtlasSprite getTextureFromBlockstate(IBlockState state) {
-    return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
+    return Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
   }
 
   public static BakedQuad colorQuad(int color, BakedQuad quad) {
